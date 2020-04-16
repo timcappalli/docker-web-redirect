@@ -12,8 +12,10 @@ This Docker container listens on port 80 and redirects all web traffic permanent
 ## Usage ##
 ### Docker run ###
 The target domain/URL is set by the `REDIRECT_TARGET` environment variable.  
+
 Possible redirect targets include domains (`mydomain.net`), paths (`mydomain.net/my_page`) or specific protocols (`https://mydomain.net/my_page`).
-Redirect type is set by the `REDIRECT_TYPE` environment variable. Unset: redirect (302), "permanent": permanent (301)
+
+Redirect type is set by the `REDIRECT_TYPE` environment variable. Unset: redirect (302), "permanent": permanent (301).
 
 **Example:** `$ docker run --rm -d -e REDIRECT_TARGET=mydomain.net -p 80:80 morbz/docker-web-redirect`
 
