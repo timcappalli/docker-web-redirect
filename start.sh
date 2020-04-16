@@ -7,11 +7,6 @@ else
 	if ! [[ $REDIRECT_TARGET =~ ^https?:// ]]; then
 		REDIRECT_TARGET="http://$REDIRECT_TARGET"
 	fi
-
-	# Add trailing slash
-	if [[ ${REDIRECT_TARGET:length-1:1} != "/" ]]; then
-		REDIRECT_TARGET="$REDIRECT_TARGET/"
-	fi
 fi
 
 # Default to 80
@@ -21,15 +16,23 @@ if [ ! -z "$PORT" ]; then
 	LISTEN="$PORT"
 fi
 
+if [ -z "$REDIRECT_TYPE" ]; then
+	TYPE="redirect"
+elif [ "$REDIRECT_TYPE"="permanent" ]; then
+	TYPE="permanent"
+else
+	TYPE="redirect"
+fi
+
 cat <<EOF > /etc/nginx/conf.d/default.conf
 server {
 	listen ${LISTEN};
 
-	rewrite ^/(.*)\$ ${REDIRECT_TARGET}\$1 redirect;
+	rewrite ^/(.*)\$ ${REDIRECT_TARGET}\$1 $MODE;
 }
 EOF
 
 
-echo "Listening to $LISTEN, Redirecting HTTP requests to ${REDIRECT_TARGET}..."
+echo  -e "Listening: $LISTEN\nHTTP Redirect Destination: ${REDIRECT_TARGET}\nType: ${TYPE}"
 
 exec nginx -g "daemon off;"
