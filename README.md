@@ -5,7 +5,7 @@ This Docker container listens on port 80 and redirects all web traffic permanent
 ## Features ##
 - Lightweight: Uses only ~2 MB RAM on Linux
 - Keeps the URL path and GET parameters
-- Configurable redirect type (301 vs 302)
+- Configurable redirect type (307 vs 301)
 
 ## Usage ##
 ### Docker run ###
